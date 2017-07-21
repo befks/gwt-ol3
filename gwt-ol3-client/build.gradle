@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    
+    dependencies {
+        classpath 'org.wisepersist:gwt-gradle-plugin:1.0.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'gwt-compiler'
+apply plugin: 'gwt-base'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+    
+dependencies {
+    implementation ('com.google.code.findbugs:jsr305:3.0.0');
+    testCompile('junit:junit:4.12');
+    testCompile('com.google.gwt:gwt-user:2.8.1');
+    testCompile('com.google.gwt:gwt-dev:2.8.1');
+}
+
+compileJava {
+    //enable incremental compilation
+    options.incremental = true
+}
+
+
+gwt {
+    gwtVersion='2.8.1'
+    minHeapSize = "512M"
+    maxHeapSize = "1024M"
+    
+    superDev {
+        noPrecompile=true
+    }
+    
+    modules 'ol.GwtOL3'
+    devModules 'ol.GwtOL3'
+    
+    test {
+    
+        hasGwtTests = true
+        prod = true
+        testBeginTimeout = 12000
+        testMethodTimeout = 12000
+        
+    }
+    
+}
+
+test {
+
+    //exclude '**/*'
+    //include 'ol/GwtOL3TestSuite*'
+}
